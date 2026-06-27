@@ -1,8 +1,13 @@
+import logging
+from pathlib import Path
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from agents.quant_research_agent import QuantResearchAgent
 from config import settings
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = (
     "You are an autonomous quantitative research agent.\n"
@@ -29,6 +34,7 @@ class ResearchRequest(BaseModel):
 
 class ResearchResponse(BaseModel):
     report: str
+    file_path: str = ""
 
 
 class HealthResponse(BaseModel):
@@ -58,5 +64,20 @@ def run_research(request: ResearchRequest):
         "final_report": "",
         "messages": [],
     }
-    result = agent.run(state)
-    return ResearchResponse(report=result["final_report"])
+    try:
+        result = agent.run(state)
+        report = result["final_report"]
+
+        output_dir = Path("output")
+        output_dir.mkdir(exist_ok=True)
+        filepath = output_dir / "research_report.md"
+        filepath.write_text(report, encoding="utf-8")
+
+        return ResearchResponse(report=report, file_path=str(filepath))
+    except Exception as e:
+        logger.exception("Research pipeline failed")
+        return ResearchResponse(
+            report=f"# Research Pipeline Error\n\n"
+                   f"**Error type:** `{type(e).__name__}`\n\n"
+                   f"**Message:** {e}\n"
+        )

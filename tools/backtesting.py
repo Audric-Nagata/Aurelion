@@ -21,7 +21,16 @@ def run_backtest(
         if signals_fn is None:
             continue
 
-        signals = signals_fn(df)
+        available_cols = df.columns.tolist()
+        try:
+            signals = signals_fn(df)
+        except Exception as e:
+            raise ValueError(
+                f"Strategy code referenced column '{e}' which doesn't exist. "
+                f"Available columns: {available_cols}. "
+                "The LLM likely hallucinated a ticker-prefixed column name "
+                "like 'AAPL_Close' instead of 'Close'."
+            ) from e
         price = df.set_index("Date")["Close"]
 
         entries = signals == 1

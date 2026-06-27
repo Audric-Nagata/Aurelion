@@ -143,8 +143,12 @@ class QuantResearchAgent(BaseAgent):
                 "role": "user",
                 "content": (
                     f"Hypothesis: {state['hypothesis']}\n\n"
-                    f"Available columns: {columns}\n\n"
+                    "The DataFrame `df` has these columns ONLY:\n"
+                    f"  {columns}\n\n"
                     f"Sample row: {sample_row}\n\n"
+                    "IMPORTANT: Use column names EXACTLY as listed above. "
+                    "For example, use `df['Close']`, not `df['AAPL_Close']` "
+                    "or `df['SPY_Close']`. No ticker prefixes.\n\n"
                     "Write ONLY the Python code for `generate_signals`. "
                     "No explanation, no markdown formatting."
                 ),

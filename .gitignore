@@ -408,7 +408,7 @@ google-services.json
 .fuse_hidden*
 
 # KDE directory preferences
-.directory
+.director
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
@@ -473,3 +473,6 @@ Temporary Items
 temp/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,nextjs,reactnative
+.opencode
+AGENTS.md
+CONCEPT.md
