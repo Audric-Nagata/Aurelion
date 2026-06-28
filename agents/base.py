@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from typing import Any, TypedDict
 
 
@@ -16,11 +17,13 @@ class AgentState(TypedDict):
     critique: dict
     final_report: str
     messages: list[dict]
+    critique_retries: int
 
 
 class BaseAgent:
-    def __init__(self, model: str, system_prompt: str):
+    def __init__(self, model: str, tools: list[Callable], system_prompt: str):
         self.model = model
+        self.tools = tools
         self.system_prompt = system_prompt
 
     def run(self, state: dict[str, Any]) -> dict[str, Any]:

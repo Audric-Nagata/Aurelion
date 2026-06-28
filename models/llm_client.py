@@ -30,7 +30,13 @@ class LLMClient:
                 },
             )
             response.raise_for_status()
-            msg = response.json()["choices"][0]["message"]
+            body = response.json()
+            if "error" in body:
+                err = body["error"]
+                raise RuntimeError(
+                    f"OpenRouter API error: {err.get('message') or err}"
+                )
+            msg = body["choices"][0]["message"]
             return msg.get("content") or msg.get("reasoning") or ""
         except httpx.HTTPStatusError as e:
             raise RuntimeError(

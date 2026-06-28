@@ -4,3 +4,4 @@ from .backtesting import run_backtest
 from .evaluation import evaluate_strategy
 from .rag_search import search_research_papers
 from .report_generator import generate_report
+from .risk_metrics import compute_risk_metrics

@@ -17,6 +17,7 @@ def test_agent_state_keys():
         "critique",
         "final_report",
         "messages",
+        "critique_retries",
     ]
     for key in required_keys:
         assert key in AgentState.__annotations__
@@ -27,7 +28,7 @@ def test_base_agent_interface():
         def run(self, state):
             return state
 
-    agent = TestAgent(model="test-model", system_prompt="test")
+    agent = TestAgent(model="test-model", tools=[], system_prompt="test")
     assert agent.model == "test-model"
     assert agent.system_prompt == "test"
     assert agent.run({"key": "value"}) == {"key": "value"}
