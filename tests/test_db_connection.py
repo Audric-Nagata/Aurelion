@@ -1,12 +1,12 @@
 import psycopg2
 from psycopg2 import errors as pg_errors
-from config import settings
+from config import database_url
 from db.vector_store import VectorStore
 
 
 def test_database_connection():
     try:
-        conn = psycopg2.connect(settings.database_url)
+        conn = psycopg2.connect(database_url)
     except psycopg2.OperationalError as e:
         raise AssertionError(
             "Could not connect to the database. "

@@ -1,5 +1,1 @@
-from .base import BaseAgent, AgentState
-from .critic_agent import CriticAgent
-from .quant_engineer import QuantEngineerAgent
-from .research_agent import ResearchAgent
-from .risk_agent import RiskAgent
+from .agents import AgentState, run_critic, run_quant_engineer, run_research, run_risk

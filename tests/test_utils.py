@@ -1,5 +1,5 @@
 import pytest
-from tools.utils import extract_code, parse_json_block
+from tools import extract_code, parse_json_block
 
 
 def test_extract_code_with_block():

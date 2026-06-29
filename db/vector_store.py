@@ -4,12 +4,12 @@ from typing import Any
 import psycopg2
 import psycopg2.extras
 from psycopg2.extensions import connection as PsycopgConnection
-from config import settings
+from config import database_url
 
 
 class VectorStore:
     def __init__(self, connection_string: str | None = None):
-        self.connection_string = connection_string or settings.database_url
+        self.connection_string = connection_string or database_url
         self._conn: PsycopgConnection | None = None
 
     @property

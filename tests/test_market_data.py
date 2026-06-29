@@ -1,4 +1,4 @@
-from tools.market_data import fetch_market_data
+from tools import fetch_market_data
 
 
 def test_fetch_single_ticker():

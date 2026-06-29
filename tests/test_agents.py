@@ -1,4 +1,4 @@
-from agents.base import AgentState, BaseAgent
+from agents import AgentState
 
 
 def test_agent_state_keys():
@@ -21,14 +21,3 @@ def test_agent_state_keys():
     ]
     for key in required_keys:
         assert key in AgentState.__annotations__
-
-
-def test_base_agent_interface():
-    class TestAgent(BaseAgent):
-        def run(self, state):
-            return state
-
-    agent = TestAgent(model="test-model", tools=[], system_prompt="test")
-    assert agent.model == "test-model"
-    assert agent.system_prompt == "test"
-    assert agent.run({"key": "value"}) == {"key": "value"}
